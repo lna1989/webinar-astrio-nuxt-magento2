@@ -1,23 +1,22 @@
 import colors from 'vuetify/es5/util/colors'
 
+require('dotenv').config()
+
 export default {
-  /*
-   ** Nuxt rendering mode
-   ** See https://nuxtjs.org/api/configuration-mode
-   */
+  server: {
+    host: process.env.NUXT_HOST, // default: localhost
+    port: process.env.NUXT_PORT, // default: 80
+  },
+
   mode: 'universal',
-  /*
-   ** Nuxt target
-   ** See https://nuxtjs.org/api/configuration-target
-   */
-  target: 'server',
-  /*
+
+  components: false,
+  /**
    ** Headers of the page
-   ** See https://nuxtjs.org/api/configuration-head
    */
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
-    title: process.env.npm_package_name || '',
+    titleTemplate: '%s',
+    title: process.env.npm_package_description || '',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -29,21 +28,23 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
-  /*
+  /**
+   ** Customize the progress-bar color
+   */
+  loading: { color: '#fff' },
+  /**
    ** Global CSS
    */
   css: [],
-  /*
+  /**
    ** Plugins to load before mounting the App
-   ** https://nuxtjs.org/guide/plugins
    */
   plugins: [],
-  /*
-   ** Auto import components
-   ** See https://nuxtjs.org/api/configuration-components
+  /**
+   ** Extend router
    */
-  components: true,
-  /*
+  router: {},
+  /**
    ** Nuxt.js dev-modules
    */
   buildModules: [
@@ -51,28 +52,49 @@ export default {
     '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify',
   ],
-  /*
+  /**
    ** Nuxt.js modules
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    // Doc: https://github.com/nuxt-community/dotenv-module
+    '@nuxtjs/dotenv',
+    // Doc : https://github.com/nuxt-community/proxy-module
+    '@nuxtjs/proxy',
+    // Doc: https://github.com/nuxt-community/apollo-module
+    '@nuxtjs/apollo',
+    // Doc: https://github.com/Developmint/nuxt-webfontloader
+    'nuxt-webfontloader',
+    // Doc: https://github.com/microcipcip/cookie-universal
+    'cookie-universal-nuxt',
   ],
-  /*
+  /**
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
   axios: {},
-  /*
+  /**
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
    */
   vuetify: {
+    defaultAssets: {
+      font: {
+        family: 'Roboto',
+      },
+      icons: 'fa',
+    },
     customVariables: ['~/assets/variables.scss'],
+    treeShake: true,
     theme: {
-      dark: true,
+      dark: false,
+      icons: false,
       themes: {
+        light: {
+          primary: '#242424',
+        },
         dark: {
           primary: colors.blue.darken2,
           accent: colors.grey.darken3,
@@ -85,9 +107,32 @@ export default {
       },
     },
   },
-  /*
-   ** Build configuration
-   ** See https://nuxtjs.org/api/configuration-build/
+  /**
+   ** Apollo configuration
    */
-  build: {},
+  apollo: {
+    clientConfigs: {
+      default: '~/plugins/apollo-config.js',
+    },
+  },
+  /**
+   ** Proxy configuration
+   */
+  proxy: [process.env.APOLLO_HTTP_END_POINT],
+  /**
+   ** Shared style resources
+   */
+  styleResources: {
+    scss: ['./assets/vuetify.override.scss'],
+  },
+  /**
+   ** Build configuration
+   */
+  build: {
+    /*
+     ** You can extend webpack config here
+     */
+    transpile: ['lodash-es', /^vuetify/],
+    extend(config, ctx) {},
+  },
 }

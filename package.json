@@ -1,6 +1,8 @@
 {
   "name": "webinar-astrio-nuxt-magento2",
   "version": "1.0.0",
+  "description": "Webinar Astrio Nuxt Magento2",
+  "author": "Nikita Loshchenin",
   "private": true,
   "scripts": {
     "dev": "nuxt",
@@ -11,11 +13,19 @@
     "lint": "npm run lint:js"
   },
   "dependencies": {
+    "@nuxtjs/apollo": "^4.0.1-rc.3",
     "@nuxtjs/axios": "^5.12.0",
+    "@nuxtjs/dotenv": "^1.4.1",
+    "@nuxtjs/proxy": "^2.0.1",
     "@nuxtjs/pwa": "^3.0.0-beta.20",
-    "nuxt": "^2.14.0"
+    "apollo-cache-persist": "^0.1.1",
+    "cookie-universal-nuxt": "^2.1.4",
+    "graphql-tag": "^2.11.0",
+    "nuxt": "^2.14.0",
+    "nuxt-webfontloader": "^1.1.0"
   },
   "devDependencies": {
+    "@nuxt/types": "^2.14.3",
     "@nuxtjs/eslint-config": "^3.1.0",
     "@nuxtjs/eslint-module": "^2.0.0",
     "@nuxtjs/vuetify": "^1.11.2",
