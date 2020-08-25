@@ -12,23 +12,24 @@ export const getters = {
     store.storeConfig && store.storeConfig.root_category_id
       ? store.storeConfig.root_category_id
       : null,
-  logoSrc: (store) =>
-    store.storeConfig && store.storeConfig.header_logo_src
-      ? store.storeConfig.header_logo_src
+  categoryUrlSuffix: (store) =>
+    store.storeConfig && store.storeConfig.category_url_suffix
+      ? store.storeConfig.category_url_suffix
       : null,
 }
-// MUTATION - sync (commit)
+// MUTATIONS - sync (commit)
 export const mutations = {
   [types.SET_STORE_CONFIG](state, payload) {
     state.storeConfig = payload
   },
 }
-// ACTION - async (dispatch)
+// ACTIONS - async (dispatch)
 export const actions = {
-  async nuxtServerInit({ dispatch, commit, store, getters }) {
-    await Promise.all([dispatch('setStoreConfig')])
+  async nuxtServerInit({ dispatch }) {
+    await dispatch('setStoreConfig')
+    await Promise.all([dispatch('category/setCategoryTree')])
   },
-  async setStoreConfig({ commit, dispatch, state }) {
+  async setStoreConfig({ commit }) {
     const gql = this.app.apolloProvider.defaultClient
 
     try {

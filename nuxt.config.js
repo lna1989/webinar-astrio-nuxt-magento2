@@ -80,17 +80,10 @@ export default {
    ** https://github.com/nuxt-community/vuetify-module
    */
   vuetify: {
-    defaultAssets: {
-      font: {
-        family: 'Roboto',
-      },
-      icons: 'fa',
-    },
     customVariables: ['~/assets/variables.scss'],
     treeShake: true,
     theme: {
       dark: false,
-      icons: false,
       themes: {
         light: {
           primary: '#242424',
